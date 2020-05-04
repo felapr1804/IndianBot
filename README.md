@@ -1,13 +1,12 @@
 # IndianBot
 
 For any query or want to know how it works join
-# https://t.me/IndianArMyGiveaway
+## https://t.me/IndianArMyGiveaway
 
 ## FORK AT YOUR OWN RISK
 ### Installing
 
 ### The Easy Way
-
 [![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 ### The Normal Way
