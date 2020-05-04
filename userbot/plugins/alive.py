@@ -17,5 +17,5 @@ async def amireallyalive(alive):
     await alive.edit("**Apun Zinda He Sarr ^.^** \n`🇮🇳BOT Status : ` **☣Hot**\n\n"
                      f"`My peru owner`: {DEFAULTUSER}\n\n"
                      "`Telethon version:` **str(__version__)**\n`Python:` **3.7.4**\n"
-                     "`Database Status:` **😀ALL OK**\n\n`Always with you, my master!\n`"
+                     "`Database Status:` **😀ALL OK**\n\n`Always with you, my master!\n`")
 
