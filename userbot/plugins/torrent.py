@@ -1,13 +1,12 @@
 """
 A Torrent Client Plugin Based On Aria2 for Userbot
-
 cmds: Magnet link : .magnet magnetLink
 	  Torrent file from local: .tor file_path
 	  Show Downloads: .show
 	  Remove All Downloads: .ariaRM
 	  
-By:- @Zero_cool7870	   
-
+By:- @Zero_cool7870
+Updated:- @ayushk780
 """
 import aria2p
 from telethon import events
@@ -15,8 +14,13 @@ import asyncio
 import os
 from userbot.utils import admin_cmd
 
+# Get best trackers for improved download speeds, thanks K-E-N-W-A-Y. Kanged :P
+trackers_list = get(
+    'https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt'
+).text.replace('\n\n', ',')
+trackers = f"[{trackers_list}]"
 
-cmd = "aria2c --enable-rpc --rpc-listen-all=false --rpc-listen-port 6800  --max-connection-per-server=10 --rpc-max-request-size=1024M --seed-time=0.01 --min-split-size=10M --follow-torrent=mem --split=10 --daemon=true --allow-overwrite=true"
+cmd = "aria2c --enable-rpc --rpc-listen-all=false --rpc-listen-port 6800  --max-connection-per-server=10 --rpc-max-request-size=1024M --seed-time=0.01 --min-split-size=10M --follow-torrent=mem --split=10 --bt-tracker={trackers} --daemon=true --allow-overwrite=true"
 EDIT_SLEEP_TIME_OUT = 5
 aria2_is_running = os.system(cmd)
 
@@ -139,7 +143,7 @@ async def progress_status(gid,event,previous):
 		file = aria2.get_download(gid)
 		if not file.is_complete:
 			if not file.error_message:
-				msg = "Downloading File: `"+str(file.name) +"`\nSpeed: "+ str(file.download_speed_string())+"\nProgress: "+str(file.progress_string())+"\nTotal Size: "+str(file.total_length_string())+"\nStatus: "+str(file.status)+"\nETA:  "+str(file.eta_string())+"\n\n"
+				msg = "Downloading File: `"+str(file.name) +"`\nSpeed: "+ str(file.download_speed_string())+"\nProgress: "+str(file.progress_string())+"\nTotal Size: "+str(file.total_length_string())+"\nStatus: "+str(file.status)+"\nETA:  "+str(file.eta_string())+"\nSeeds:  "+str(file.)+"\n\n"
 				if previous != msg:
 					await event.edit(msg)
 					previous = msg
@@ -150,7 +154,11 @@ async def progress_status(gid,event,previous):
 			await asyncio.sleep(EDIT_SLEEP_TIME_OUT)	
 			await progress_status(gid,event,previous)
 		else:
-			await event.edit("File Downloaded Successfully: `{}`".format(file.name))
+			await event.edit(
+                    f"`Name`: `{file.name}`\n"
+                    f"`Size`: `{file.total_length_string()}`\n"
+                    f"`Path`: `{TEMP_DOWNLOAD_DIRECTORY + file.name}`\n"
+                    )
 			return
 	except Exception as e:
 		if " not found" in str(e) or "'file'" in str(e):
@@ -162,4 +170,4 @@ async def progress_status(gid,event,previous):
 		else:
 			logger.info(str(e))
 			await event.edit("Error :\n`{}`".format(str(e)))
-			return			
+			return
