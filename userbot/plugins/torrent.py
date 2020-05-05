@@ -13,6 +13,8 @@ from telethon import events
 import asyncio
 import os
 from userbot.utils import admin_cmd
+from requests import get
+
 
 # Get best trackers for improved download speeds, thanks K-E-N-W-A-Y. Kanged :P
 trackers_list = get(
